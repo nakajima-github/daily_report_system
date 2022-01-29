@@ -170,4 +170,17 @@ public class EmployeeAction extends ActionBase {
 
         }
     }
+
+    /**
+     * 論理削除を行う
+     * @throws ServletException
+     * @param IOException
+     */
+    public void destroy() throws ServletException, IOException {
+        if (checkToken()) {
+            service.destroy(toNumber(getRequestParam(AttributeConst.EMP_ID)));
+            putSessionScope(AttributeConst.FLUSH, MessageConst.I_DELETED.getMessage());
+            redirect(ForwardConst.ACT_EMP, ForwardConst.CMD_INDEX);
+        }
+    }
 }
