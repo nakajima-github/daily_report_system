@@ -5,10 +5,11 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.xml.bind.DatatypeConverter;
 
-// ハッシュ化処理を行うクラス
+//ハッシュ化処理を行うクラス
 public class EncryptUtil {
-    // 生のパスワード文字列とpepper文字列を連結した文字列をSHA-256関数でハッシュ化
-    public static String getPasswordEmcrypt(String plainPass, String pepper) {
+
+    //生のパスワード文字列とpepper文字列を連結した文字列をSHA-256関数でハッシュ化し、返却する
+    public static String getPasswordEncrypt(String plainPass, String pepper) {
         String ret = "";
 
         if (plainPass != null && !plainPass.equals("")) {
@@ -17,8 +18,10 @@ public class EncryptUtil {
             try {
                 bytes = MessageDigest.getInstance("SHA-256").digest(password.getBytes());
                 ret = DatatypeConverter.printHexBinary(bytes);
-            }catch (NoSuchAlgorithmException ex) {}
+            } catch (NoSuchAlgorithmException ex) {
+            }
         }
+
         return ret;
     }
 }
