@@ -39,6 +39,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 public class Report {
+
     /**
      * id
      */

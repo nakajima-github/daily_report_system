@@ -11,7 +11,7 @@ import models.Report;
  */
 public class ReportConverter {
     /**
-     * ViewモデルのインスタンスからDTOモデルのインスアンスを作成する
+     * ViewモデルのインスタンスからDTOモデルのインスタンスを作成する
      * @param rv ReportViewのインスタンス
      * @return Reportのインスタンス
      */
@@ -32,6 +32,7 @@ public class ReportConverter {
      * @return ReportViewのインスタンス
      */
     public static ReportView toView(Report r) {
+
         if (r == null) {
             return null;
         }
@@ -63,10 +64,10 @@ public class ReportConverter {
 
     /**
      * Viewモデルの全フィールドの内容をDTOモデルのフィールドにコピーする
-     * @param r DTOモデル（コピー先）
-     * @return rv Viewモデル（コピー元）
+     * @param r DTOモデル(コピー先)
+     * @param rv Viewモデル(コピー元)
      */
-    public static void copyViewToModer(Report r, ReportView rv) {
+    public static void copyViewToModel(Report r, ReportView rv) {
         r.setId(rv.getId());
         r.setEmployee(EmployeeConverter.toModel(rv.getEmployee()));
         r.setReportDate(rv.getReportDate());
@@ -74,5 +75,7 @@ public class ReportConverter {
         r.setContent(rv.getContent());
         r.setCreatedAt(rv.getCreatedAt());
         r.setUpdatedAt(rv.getUpdatedAt());
+
     }
+
 }
