@@ -158,4 +158,33 @@ public class ReportAction extends ActionBase {
             forward(ForwardConst.FW_REP_EDIT);
         }
     }
+
+    /**
+     * 更新を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void update() throws ServletException, IOException {
+        if (checkToken()) {
+            ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+
+            rv.setReportDate(toLocalDate(getRequestParam(AttributeConst.REP_DATE)));
+            rv.setTitle(getRequestParam(AttributeConst.REP_TITLE));
+            rv.setContent(getRequestParam(AttributeConst.REP_CONTENT));
+
+            List<String> errors = service.update(rv);
+            if (errors.size() > 0) {
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.REPORT, rv); //入力された日報情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                forward(ForwardConst.FW_REP_EDIT);
+            } else {
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
+
+                redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
+
+            }
+        }
+    }
 }
